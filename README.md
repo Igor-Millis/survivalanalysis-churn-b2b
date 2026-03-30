@@ -1,4 +1,4 @@
-# Análise de Vendas B2B
+# Análise de Sobrevivência - Churn
 ### 📖 Introdução 
 Este projeto tem como objetivo modelar o tempo até a interrupção do relacionamento comercial entre uma empresa do setor de moda (modelo B2B) e suas lojas parceiras. No contexto analisado, a empresa realiza vendas em atacado para lojas multimarcas, que revendem os produtos ao consumidor final. Observa-se, entretanto, que algumas lojas deixam de realizar novos pedidos ao longo do tempo, caracterizando um fenômeno de churn.
 
