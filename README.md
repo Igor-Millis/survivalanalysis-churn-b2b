@@ -99,15 +99,15 @@ Unificar quatro fontes de dados distintas (lojas, pedidos, pagamentos e interaç
 | Chaves inconsistentes | Padronização para numérico inteiro |
 | Datas mistas | Conversão com `as.Date()` em todas as colunas |
 | Dados faltantes | Preenchido de acordo com a variável |
-| Definição de "morte" | 180 dias sem compra = loja morta |
+| Definição de "morte" | *n* dias sem compra = loja morta |
 
 ### 📅 Definição do Evento e Censura
 
 Em um modelo B2B de lojas parceiras, não existe um "cancelamento formal". Uma loja pode simplesmente parar de comprar sem aviso, mas também pode ficar meses sem pedidos por questões sazonais ou de estoque e depois retornar normalmente.
 
-Para definir o que caracteriza a "morte" de uma loja, foi analisada a distribuição do intervalo entre pedidos das lojas ativas. Identificou-se que 90% dos intervalos são inferiores a 180 dias.
+Para definir o que caracteriza a "morte" de uma loja, foi analisada a distribuição do intervalo entre pedidos das lojas ativas. Identificou-se que 90% dos intervalos são inferiores a *n* dias.
 
-Portanto, adotou-se o seguinte critério: Uma loja é considerada "morta" quando fica 180 dias ou mais sem realizar nenhum pedido e não retoma as compras até o final do período analisado.
+Portanto, adotou-se o seguinte critério: Uma loja é considerada "morta" quando fica *n* dias ou mais sem realizar nenhum pedido e não retoma as compras até o final do período analisado.
 
 ### ⚙️ Engenharia de Variáveis
 
@@ -153,7 +153,7 @@ Transformar os dados brutos das quatro fontes (lojas, pedidos, pagamentos e inte
 | Variável | Descrição | Cálculo |
 |----------|-----------|---------|
 | `tempo` | Tempo de vida da loja (em dias) | `data_evento - data_entrada` |
-| `morreu` | Indicador de evento (1 = morreu, 0 = censurada) | Baseado na regra dos 180 dias |
+| `morreu` | Indicador de evento (1 = morreu, 0 = censurada) | Baseado na regra dos *n* dias |
 
 #### Tratamento de Dados Faltantes
 
@@ -244,7 +244,7 @@ O modelo de Cox assume que os **Hazards são proporcionais** ao longo do tempo, 
 #### Limitações da Metodologia
 
 1. **Dados de sell-out não disponíveis** – Variáveis como giro de estoque e velocidade de revenda não puderam ser incluídas
-2. **Threshold de 180 dias** – A definição de morte é uma aproximação baseada em dados históricos
+2. **Threshold de *n* dias** – A definição de morte é uma aproximação baseada em dados históricos
 3. **Modelo assume proporcionalidade** – O efeito das variáveis é constante no tempo
 4. **Validação externa pendente** – O modelo ainda não foi testado em uma coorte temporal futura
 
